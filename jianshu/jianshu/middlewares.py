@@ -6,6 +6,14 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from jianshu.user_agents import agents
+import random
+
+class UserAgentMiddlewares(object):
+    def process_request(self,request,spider):
+        agent = random.choice(agents)
+        request.headers['User-Agent'] = agent
+        print('Now , The User-agent is ',request.headers['User-Agent'])
 
 
 class JianshuSpiderMiddleware(object):
@@ -101,3 +109,4 @@ class JianshuDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
